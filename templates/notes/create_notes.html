@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h1>{{title}}</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="title">title</label>
+        <input required type="text" name="title"  value="{{note.title|default:''}} "> <br>
+
+        <label for="description">Enter  description</label>
+        <input required type="text" name="description" value="{{note.description|default:''}} "> <br>
+
+        <button type="submit">{{title}}</button>
+    </form>
+    
+{% endblock %}

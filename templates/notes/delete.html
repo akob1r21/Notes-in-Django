@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h1>Delete note</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+       <p>Are u sure to delte this note {{note.title}}</p>
+        <button type="submit">Delete</button>
+    </form>
+    <p>{{error}}</p>
+{% endblock %}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        {% if request.user.is_authenticated %}
+            <p><strong>Welcome:</strong>{{request.user.username}}</p> 
+            <p>Dont u have account <a href="{% url 'logout' %}">Logout</a></p> 
+
+        {% else %}
+            <p>Do u have account <a href="{% url 'login' %}">Sign in</a></p> 
+            <p>Dont u have account <a href="{% url 'register' %}">Sign up</a></p> 
+        {% endif %}
+
+    </header>
+
+    {% block main %}
+        <p>Default main.... </p>
+    {% endblock %}
+
+
+    <footer>
+        <p>Notes app</p>
+    </footer>
+</body>
+</html>

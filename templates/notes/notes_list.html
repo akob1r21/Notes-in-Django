@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <a href="{% url 'create_notes' %}">Create notes</a>
+    <h1>Notes</h1>
+    
+    {% for note in notes %}
+        <p><strong>title</strong> {{note.title}}</p>
+        <p><strong>description</strong> {{note.description}}</p>
+        <p><strong>created_at</strong> {{note.created_at}}</p>
+        <p><strong>update_at</strong> {{note.update_at}}</p>
+     <a href="{% url 'delete_notes' note.id %}">Delete notes</a>
+    <a href="{% url 'update_notes' note.id %}">Update notes</a>
+     
+    {% empty %}
+        <p>Didnt find any note for u</p>
+    {% endfor %}
+
+{% endblock %}
