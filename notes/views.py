@@ -32,10 +32,8 @@ def create_notes(request):
 
 @login_required
 def update_note(request, pk):
-    note = Notes.objects.get(pk=pk)
-    if request.user!=note.user:
-        return render(request, 'notes/create_notes.html', {'error':'You dont have permession'})
-
+    note = Notes.objects.filter(pk=pk, user=request.user).first()
+    
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description')
