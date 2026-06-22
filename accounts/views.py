@@ -1,18 +1,17 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model, authenticate, login, logout
-from notes.models import Notes
+from django.contrib.auth import  authenticate, login, logout
+from notes.models import Notes, User
 from django.core.mail import send_mail
 from django.conf import settings
 from random import randint
 from .models import EmailConfirm
 
-User = get_user_model()
 
 
 
 def send_email_confirmation(user):
     code = randint(100000, 999999)
-    email_confirm = EmailConfirm.objects.update_or_create(user=user, defaults={'code': str(code)})
+    EmailConfirm.objects.update_or_create(user=user, defaults={'code': str(code)})
     try:
         send_mail(
             subject='Email confirmation',
@@ -63,12 +62,14 @@ def confirm_email(request):
         if not user:
             return render(request, 'accounts/confirm.html', {'error': 'Wrond email or code'})
         
-        if code != code:
+        confirm_code = EmailConfirm.objects.filter(user=user).first()
+        if code != confirm_code.code:
             return render(request, 'accounts/confirm.html', {'error': 'Wrond  code'})
 
         user.is_active = True
         user.save()
-        return redirect('login')
+        login(request, user=user)
+        return redirect('notes')
 
     return render(request, 'accounts/confirm.html')
 
